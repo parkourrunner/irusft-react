@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import data from "../data/dataMap-v2.js";
 import speakerImg from "../img/speaker.png";
+import videoImg from "../img/video.png";
+import galleryImg from "../img/gallery.png";
 
 const Container = styled.div`
   display: flex;
@@ -36,7 +38,38 @@ const DescWrapper = styled.div`
   margin-top: 48px;
 `;
 
-const GalleryWrapper = styled.div``;
+const GalleryWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+`;
+
+const VideoButton = styled.button`
+  padding: 6px 12px;
+  background: transparent;
+  border: none;
+`;
+
+const VideoImg = styled.img`
+  vertical-align: middle;
+  cursor: pointer;
+`;
+
+const GalleryButton = styled.button`
+  padding: 6px 12px;
+  background: transparent;
+  border: none;
+`;
+
+const GalleryImg = styled.img`
+  vertical-align: middle;
+  cursor: pointer;
+`;
+
+const VideoModal = styled.div``;
+
+const GalleryModal = styled.div``;
 
 const NavigationWrapper = styled.div`
   display: flex;
@@ -80,6 +113,15 @@ const Page = () => {
       navigate("/");
     }
   }, [id, navigate, result]);
+
+  const openGalleryModal = (e) => {
+    e.preventDefault();
+  };
+
+  const openVideoModal = (e) => {
+    e.preventDefault();
+  };
+
   const handleClick = (event) => {
     const change = event.target.dataset.change;
     if (change === 0) {
@@ -88,6 +130,7 @@ const Page = () => {
       navigate(`/page/${id + Number(change)}`);
     }
   };
+
   return (
     <Container>
       <HeaderLine>
@@ -112,6 +155,14 @@ const Page = () => {
       <DescWrapper>
         <span dangerouslySetInnerHTML={{ __html: result.description }}></span>
       </DescWrapper>
+      <GalleryWrapper>
+        <GalleryButton onClick={openGalleryModal}>
+          <GalleryImg src={galleryImg}></GalleryImg>
+        </GalleryButton>
+        <VideoButton onClick={openVideoModal}>
+          <VideoImg src={videoImg}></VideoImg>
+        </VideoButton>
+      </GalleryWrapper>
       <NavigationWrapper>
         <Button data-change="1" onClick={handleClick}>
           بعدی
