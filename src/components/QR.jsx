@@ -6,6 +6,9 @@ const Container = styled.div`
   width: 150px;
   display: flex;
   justify-content: center;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const QR = () => {

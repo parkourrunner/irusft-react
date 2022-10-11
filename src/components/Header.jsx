@@ -9,6 +9,9 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -37,6 +40,9 @@ const LogoWrapper = styled.div`
   width: 150px;
   display: flex;
   justify-content: center;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const Logo = styled.img`
