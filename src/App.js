@@ -9,6 +9,7 @@ const Container = styled.div`
   display: flex;
   background-color: #90d692;
   direction: rtl;
+  height: 100%;
 `;
 
 const Main = styled.div`
