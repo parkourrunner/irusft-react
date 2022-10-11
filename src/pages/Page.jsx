@@ -7,6 +7,7 @@ import videoImg from "../img/video.png";
 import galleryImg from "../img/gallery.png";
 import Modal from "react-bootstrap/Modal";
 import { Carousel } from "react-bootstrap";
+import { useSpeechSynthesis } from "react-speech-kit";
 
 const Container = styled.div`
   display: flex;
@@ -69,10 +70,6 @@ const GalleryImg = styled.img`
   cursor: pointer;
 `;
 
-const VideoModal = styled.div``;
-
-const GalleryModal = styled.div``;
-
 const NavigationWrapper = styled.div`
   display: flex;
   justify-content: space-between;
@@ -104,9 +101,11 @@ const Page = () => {
   const [currentItem, setCurrentItem] = useState({});
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [showGalleryModal, setShowGalleryModal] = useState(false);
+  const { speak } = useSpeechSynthesis();
   const navigate = useNavigate();
   const path = useLocation();
   const id = Number(path.pathname.split("/")[2]);
+
   useEffect(() => {
     if (!id) {
       navigate("/");
@@ -139,7 +138,29 @@ const Page = () => {
 
   const handleCloseVideoModal = () => setShowVideoModal(false);
   const handleCloseGalleryModal = () => setShowGalleryModal(false);
-  // const handleShow = () => setShow(true);
+  const speechHandler = () => {
+    const voices = window.speechSynthesis.getVoices();
+    let voice;
+    if (voices.find((k) => k.name == "Google русский")) {
+      voice = voices.find((k) => k.name == "Google русский");
+    } else if (
+      voices.find((k) => k.name == "Microsoft Pavel - Russian (Russia)")
+    ) {
+      voice = voices.find(
+        (k) => k.name == "Microsoft Pavel - Russian (Russia)"
+      );
+    } else if (
+      voices.find((k) => k.name == "Microsoft Irina - Russian (Russia)")
+    ) {
+      voice = voices.find(
+        (k) => k.name == "Microsoft Irina - Russian (Russia)"
+      );
+    } else {
+      alert("مرورگر شما از هیچ کدام از گویندگان روس زبان پشتیبانی نمی کند.");
+      return;
+    }
+    speak({ text: currentItem.ruName, voice: voice });
+  };
 
   return (
     <Container>
@@ -149,7 +170,7 @@ const Page = () => {
         </div>
         <div>
           <Speak>
-            <SpeakImg src={speakerImg} />
+            <SpeakImg src={speakerImg} onClick={speechHandler} />
           </Speak>
           <span>{currentItem.ruName}</span>
         </div>
