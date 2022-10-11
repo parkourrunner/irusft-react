@@ -41,20 +41,6 @@ const Input = styled.input`
   font-family: inherit;
 `;
 
-const Button = styled.button`
-  background-color: #00818b;
-  color: white;
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  height: 50px;
-  width: 110px;
-  border: 1px solid transparent;
-  font-size: 1rem;
-  border-radius: 0.25rem;
-  font-family: inherit;
-`;
-
 const ResultWrapper = styled.div`
   display: flex;
   max-height: 400px;
@@ -87,7 +73,6 @@ const Home = () => {
       <Wrapper>
         <SearchWrapper>
           <Input onChange={(e) => setQ(e.target.value)} placeholder="جستجو" />
-          {/* <Button>جستجو</Button> */}
         </SearchWrapper>
         <ResultWrapper>
           <Ul>

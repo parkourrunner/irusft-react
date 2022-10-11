@@ -129,7 +129,7 @@ const Page = () => {
 
   const handleClick = (event) => {
     const change = event.target.dataset.change;
-    if (change === 0) {
+    if (change === "0") {
       navigate("/");
     } else {
       navigate(`/page/${id + Number(change)}`);
@@ -141,19 +141,19 @@ const Page = () => {
   const speechHandler = () => {
     const voices = window.speechSynthesis.getVoices();
     let voice;
-    if (voices.find((k) => k.name == "Google русский")) {
-      voice = voices.find((k) => k.name == "Google русский");
+    if (voices.find((k) => k.name === "Google русский")) {
+      voice = voices.find((k) => k.name === "Google русский");
     } else if (
-      voices.find((k) => k.name == "Microsoft Pavel - Russian (Russia)")
+      voices.find((k) => k.name === "Microsoft Pavel - Russian (Russia)")
     ) {
       voice = voices.find(
-        (k) => k.name == "Microsoft Pavel - Russian (Russia)"
+        (k) => k.name === "Microsoft Pavel - Russian (Russia)"
       );
     } else if (
-      voices.find((k) => k.name == "Microsoft Irina - Russian (Russia)")
+      voices.find((k) => k.name === "Microsoft Irina - Russian (Russia)")
     ) {
       voice = voices.find(
-        (k) => k.name == "Microsoft Irina - Russian (Russia)"
+        (k) => k.name === "Microsoft Irina - Russian (Russia)"
       );
     } else {
       alert("مرورگر شما از هیچ کدام از گویندگان روس زبان پشتیبانی نمی کند.");
@@ -204,7 +204,7 @@ const Page = () => {
                         <img
                           className="d-block w-100"
                           src={`../assets/data/${img}`}
-                          alt="image"
+                          alt={img}
                         />
                       </Carousel.Item>
                     );

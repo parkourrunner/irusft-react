@@ -21,7 +21,7 @@ const Wrapper = styled.div`
 
 const TitleWrapper = styled.div`
   padding: 16px;
-  width: 500px;
+  width: 480px;
 `;
 
 const Title = styled.h4`
