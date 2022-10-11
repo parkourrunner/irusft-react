@@ -5,6 +5,8 @@ import data from "../data/dataMap-v2.js";
 import speakerImg from "../img/speaker.png";
 import videoImg from "../img/video.png";
 import galleryImg from "../img/gallery.png";
+import Modal from "react-bootstrap/Modal";
+import { Carousel } from "react-bootstrap";
 
 const Container = styled.div`
   display: flex;
@@ -38,7 +40,7 @@ const DescWrapper = styled.div`
   margin-top: 48px;
 `;
 
-const GalleryWrapper = styled.div`
+const GalleryIconsWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: end;
@@ -99,7 +101,9 @@ const Button = styled.button`
 `;
 
 const Page = () => {
-  const [result, setResult] = useState({});
+  const [currentItem, setCurrentItem] = useState({});
+  const [showVideoModal, setShowVideoModal] = useState(false);
+  const [showGalleryModal, setShowGalleryModal] = useState(false);
   const navigate = useNavigate();
   const path = useLocation();
   const id = Number(path.pathname.split("/")[2]);
@@ -107,19 +111,21 @@ const Page = () => {
     if (!id) {
       navigate("/");
     }
-    setResult(data.filter((item) => item.id === id)[0]);
+    setCurrentItem(data.filter((item) => item.id === id)[0]);
 
-    if (!result) {
+    if (!currentItem) {
       navigate("/");
     }
-  }, [id, navigate, result]);
+  }, [id, navigate, currentItem]);
 
   const openGalleryModal = (e) => {
     e.preventDefault();
+    setShowGalleryModal(true);
   };
 
   const openVideoModal = (e) => {
     e.preventDefault();
+    setShowVideoModal(true);
   };
 
   const handleClick = (event) => {
@@ -131,38 +137,82 @@ const Page = () => {
     }
   };
 
+  const handleCloseVideoModal = () => setShowVideoModal(false);
+  const handleCloseGalleryModal = () => setShowGalleryModal(false);
+  // const handleShow = () => setShow(true);
+
   return (
     <Container>
       <HeaderLine>
         <div>
-          <span>{result.faName}</span>
+          <span>{currentItem.faName}</span>
         </div>
         <div>
           <Speak>
             <SpeakImg src={speakerImg} />
           </Speak>
-          <span>{result.ruName}</span>
+          <span>{currentItem.ruName}</span>
         </div>
       </HeaderLine>
       <HeaderLine>
         <div>
-          <span>{result.faDate}</span>
+          <span>{currentItem.faDate}</span>
         </div>
         <EnDate>
-          <span>{result.enDate}</span>
+          <span>{currentItem.enDate}</span>
         </EnDate>
       </HeaderLine>
       <DescWrapper>
-        <span dangerouslySetInnerHTML={{ __html: result.description }}></span>
+        <span
+          dangerouslySetInnerHTML={{ __html: currentItem.description }}
+        ></span>
       </DescWrapper>
-      <GalleryWrapper>
-        <GalleryButton onClick={openGalleryModal}>
-          <GalleryImg src={galleryImg}></GalleryImg>
-        </GalleryButton>
-        <VideoButton onClick={openVideoModal}>
-          <VideoImg src={videoImg}></VideoImg>
-        </VideoButton>
-      </GalleryWrapper>
+      <GalleryIconsWrapper>
+        {currentItem.imgSrc && currentItem.imgSrc.length !== 0 && (
+          <>
+            <GalleryButton onClick={openGalleryModal}>
+              <GalleryImg src={galleryImg}></GalleryImg>
+            </GalleryButton>
+            <Modal show={showGalleryModal} onHide={handleCloseGalleryModal}>
+              <Modal.Header closeButton></Modal.Header>
+              <Modal.Body>
+                <Carousel>
+                  {currentItem.imgSrc.map((img) => {
+                    return (
+                      <Carousel.Item interval={5000} key={img}>
+                        <img
+                          className="d-block w-100"
+                          src={`../assets/data/${img}`}
+                          alt="image"
+                        />
+                      </Carousel.Item>
+                    );
+                  })}
+                </Carousel>
+              </Modal.Body>
+            </Modal>
+          </>
+        )}
+        {currentItem.videoSrc && (
+          <>
+            <VideoButton onClick={openVideoModal}>
+              <VideoImg src={videoImg}></VideoImg>
+            </VideoButton>
+            <Modal show={showVideoModal} onHide={handleCloseVideoModal}>
+              <Modal.Header closeButton></Modal.Header>
+              <Modal.Body>
+                {currentItem.videoSrc && (
+                  <video
+                    controls
+                    width="100%"
+                    src={`../assets/data/${currentItem.videoSrc}`}
+                  />
+                )}
+              </Modal.Body>
+            </Modal>
+          </>
+        )}
+      </GalleryIconsWrapper>
       <NavigationWrapper>
         <Button data-change="1" onClick={handleClick}>
           بعدی

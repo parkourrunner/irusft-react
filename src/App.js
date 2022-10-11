@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Page from "./pages/Page.jsx";
 import Home from "./pages/Home";
+import React from "react";
 
 const Container = styled.div`
   display: flex;
