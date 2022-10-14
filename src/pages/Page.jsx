@@ -127,6 +127,9 @@ const Page = () => {
     setShowVideoModal(true);
   };
 
+  global.goToPage = (pageId) => {
+    navigate(`/page/${pageId}`);
+  };
   const handleClick = (event) => {
     const change = event.target.dataset.change;
     if (change === "0") {

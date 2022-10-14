@@ -53,3 +53,9 @@ body {
 .en {
   font-family: IRANSansEn !important;
 }
+
+.link-to-content {
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+}
